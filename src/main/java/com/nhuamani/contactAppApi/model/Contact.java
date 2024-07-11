@@ -16,8 +16,8 @@ public class Contact extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
     private String company;
     private String phone;
     private LocalDate birthdate;
