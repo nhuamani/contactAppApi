@@ -16,12 +16,12 @@ public class ContactServiceImpl implements ContactService {
     private ContactRepository contactRepository;
 
     @Override
-    public List<Contact> getAllContacts() {
+    public List<Contact> getAll() {
         return contactRepository.findAll();
     }
 
     @Override
-    public Contact getByIdContact(Long id) {
+    public Contact getById(Long id) {
         Optional<Contact> optionalContact = contactRepository.findById(id);
         Contact contact = null;
         if (optionalContact.isPresent()) {
@@ -33,17 +33,17 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void saveContact(Contact contact) {
+    public void save(Contact contact) {
         contactRepository.save(contact);
     }
 
     @Override
-    public void updateContact(Contact contact) {
+    public void update(Contact contact) {
         contactRepository.save(contact);
     }
 
     @Override
-    public void deleteContact(Long id) {
+    public void delete(Long id) {
         contactRepository.deleteById(id);
     }
 }
