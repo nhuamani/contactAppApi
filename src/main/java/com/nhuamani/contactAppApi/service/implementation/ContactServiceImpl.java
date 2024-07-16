@@ -8,12 +8,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ContactServiceImpl implements ContactService {
 
     @Autowired
-    private ContactRepository contactRepository;
+    private final ContactRepository contactRepository;
+
+    public ContactServiceImpl(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
 
     @Override
     public List<Contact> getAll() {
@@ -21,7 +26,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public Contact getById(Long id) {
+    public Contact getById(UUID id) {
         Optional<Contact> optionalContact = contactRepository.findById(id);
         Contact contact = null;
         if (optionalContact.isPresent()) {
@@ -33,17 +38,19 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void save(Contact contact) {
+    public Contact save(Contact contact) {
         contactRepository.save(contact);
+        return contact;
     }
 
     @Override
-    public void update(Contact contact) {
+    public Contact update(Contact contact) {
         contactRepository.save(contact);
+        return contact;
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         contactRepository.deleteById(id);
     }
 }

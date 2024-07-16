@@ -14,10 +14,13 @@ import java.util.UUID;
 @Table(name = "contacts")
 public class Contact extends BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String firstname;
-    private String lastname;
+    @Column(name = "firstname")
+    private String firstName;
+    @Column(name = "lastname")
+    private String lastName;
+    private Boolean status;
     private String company;
     private String phone;
     private LocalDate birthdate;
