@@ -1,5 +1,6 @@
 package com.nhuamani.contactAppApi.service.implementation;
 
+import com.nhuamani.contactAppApi.exception.ContactNotFoundException;
 import com.nhuamani.contactAppApi.model.Contact;
 import com.nhuamani.contactAppApi.repository.ContactRepository;
 import com.nhuamani.contactAppApi.service.ContactService;
@@ -44,13 +45,23 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public Contact update(Contact contact) {
-        contactRepository.save(contact);
-        return contact;
+    public Contact updateById(Contact newContact, UUID id) {
+        return contactRepository.findById(id)
+                .map(contact -> {
+                    contact.setFirstName(newContact.getFirstName());
+                    contact.setLastName(newContact.getLastName());
+                    contact.setStatus(newContact.getStatus());
+                    contact.setCompany(newContact.getCompany());
+                    contact.setPhone(newContact.getPhone());
+                    contact.setBirthdate(newContact.getBirthdate());
+                    contact.setEmail(newContact.getEmail());
+                    return contactRepository.save(contact);
+                })
+                .orElseThrow(() -> new ContactNotFoundException("Contact not found with id " + id));
     }
 
     @Override
-    public void delete(UUID id) {
+    public void deleteById(UUID id) {
         contactRepository.deleteById(id);
     }
 }

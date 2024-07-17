@@ -10,6 +10,6 @@ public interface ContactService {
     public List<Contact> getAll();
     public Contact getById(UUID id);
     public Contact save(Contact contact);
-    public Contact update(Contact contact);
-    public void delete(UUID id);
+    public Contact updateById(Contact newContact, UUID id);
+    public void deleteById(UUID id);
 }
