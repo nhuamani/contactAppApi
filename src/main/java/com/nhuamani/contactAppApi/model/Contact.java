@@ -20,6 +20,7 @@ public class Contact extends BaseEntity {
     private String firstName;
     @Column(name = "lastname")
     private String lastName;
+    @Column(nullable=false)
     private Boolean status;
     private String company;
     private String phone;
