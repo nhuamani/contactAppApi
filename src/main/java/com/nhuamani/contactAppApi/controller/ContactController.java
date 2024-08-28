@@ -2,13 +2,16 @@ package com.nhuamani.contactAppApi.controller;
 
 import com.nhuamani.contactAppApi.model.Contact;
 import com.nhuamani.contactAppApi.service.ContactService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/contacts")
 public class ContactController {
 
     private final ContactService contactService;
@@ -17,30 +20,32 @@ public class ContactController {
         this.contactService = contactService;
     }
 
-    @GetMapping ("/contacts")
+    @GetMapping()
     public List<Contact> getAllContacts() {
         return contactService.getAll();
     }
 
-    @GetMapping ("/contacts/{id}")
-    public Contact getContactById(@PathVariable("id") UUID id) {
-        return contactService.getById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<Contact> getContactById(@PathVariable("id") UUID id) {
+        Optional<Contact> contact = Optional.ofNullable(contactService.getById(id));
+        return contact.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/contacts")
-    public Contact createContact(@RequestBody Contact contact) {
-        contactService.create(contact);
-        return contact;
+    @PostMapping()
+    public ResponseEntity<Contact> createContact(@RequestBody Contact contact) {
+        Contact savedContact = contactService.create(contact);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedContact);
     }
 
-    @PutMapping("/contacts/{id}")
-    public Contact updateContact(@PathVariable UUID id, @RequestBody Contact newContact) {
-        contactService.updateById(newContact, id);
-        return newContact;
+    @PutMapping("/{id}")
+    public ResponseEntity<Contact> updateContact(@PathVariable UUID id, @RequestBody Contact newContact) {
+        Contact newContactt = contactService.updateById(newContact, id);
+        return ResponseEntity.ok(newContactt);
     }
 
-    @DeleteMapping("/contacts/{id}")
-    public void deleteContact(@PathVariable("id") UUID id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteContact(@PathVariable("id") UUID id) {
         contactService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
