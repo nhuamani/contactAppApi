@@ -4,7 +4,6 @@ import com.nhuamani.contactAppApi.exception.ContactNotFoundException;
 import com.nhuamani.contactAppApi.model.Contact;
 import com.nhuamani.contactAppApi.repository.ContactRepository;
 import com.nhuamani.contactAppApi.service.ContactService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.UUID;
 @Service
 public class ContactServiceImpl implements ContactService {
 
-    @Autowired
     private final ContactRepository contactRepository;
 
     public ContactServiceImpl(ContactRepository contactRepository) {
@@ -39,7 +37,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public Contact save(Contact contact) {
+    public Contact create(Contact contact) {
         contactRepository.save(contact);
         return contact;
     }

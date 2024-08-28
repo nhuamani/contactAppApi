@@ -2,8 +2,6 @@ package com.nhuamani.contactAppApi.controller;
 
 import com.nhuamani.contactAppApi.model.Contact;
 import com.nhuamani.contactAppApi.service.ContactService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +11,6 @@ import java.util.UUID;
 @RequestMapping("/v1")
 public class ContactController {
 
-    @Autowired
     private final ContactService contactService;
 
     public ContactController(ContactService contactService) {
@@ -32,7 +29,7 @@ public class ContactController {
 
     @PostMapping("/contacts")
     public Contact createContact(@RequestBody Contact contact) {
-        contactService.save(contact);
+        contactService.create(contact);
         return contact;
     }
 
