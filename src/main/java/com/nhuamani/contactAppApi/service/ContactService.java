@@ -12,4 +12,5 @@ public interface ContactService {
     public Contact create(Contact contact);
     public Contact updateById(Contact newContact, UUID id);
     public void deleteById(UUID id);
+    public Contact getVoteRating(UUID id, Double rating);
 }

@@ -4,6 +4,7 @@ import com.nhuamani.contactAppApi.exception.ContactNotFoundException;
 import com.nhuamani.contactAppApi.model.Contact;
 import com.nhuamani.contactAppApi.repository.ContactRepository;
 import com.nhuamani.contactAppApi.service.ContactService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,6 +54,8 @@ public class ContactServiceImpl implements ContactService {
                     contact.setPhone(newContact.getPhone());
                     contact.setBirthdate(newContact.getBirthdate());
                     contact.setEmail(newContact.getEmail());
+                    contact.setVotes(newContact.getVotes());
+                    contact.setRating(newContact.getRating());
                     return contactRepository.save(contact);
                 })
                 .orElseThrow(() -> new ContactNotFoundException("Contact not found with id " + id));
@@ -61,5 +64,21 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public void deleteById(UUID id) {
         contactRepository.deleteById(id);
+    }
+
+    @Override
+    public Contact getVoteRating(UUID id, Double rating) {
+
+        Optional<Contact> optional = contactRepository.findById(id);
+        System.out.println(optional.toString());
+        System.out.println(rating);
+        Contact contact = optional.get();
+
+        double newRating = ((contact.getVotes() * contact.getRating()) + rating) / (contact.getVotes() + 1);
+
+        contact.setVotes(contact.getVotes() + 1);
+        contact.setRating(newRating);
+
+        return contactRepository.save(contact);
     }
 }

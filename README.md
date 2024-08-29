@@ -7,7 +7,7 @@
 
 ## Dev
 
-- Run app in `http://localhost:9090/api/v1/contacts`
+- Run app in http://localhost:9090/api/v1/contacts`
 
 ## Documentation
 

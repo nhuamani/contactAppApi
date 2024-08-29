@@ -48,4 +48,10 @@ public class ContactController {
         contactService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/vote/{id}/{rating}")
+    public ResponseEntity<Contact> voteContact(@PathVariable UUID id, @PathVariable double rating) {
+        Contact voted = contactService.getVoteRating(id, rating);
+        return ResponseEntity.ok(voted);
+    }
 }

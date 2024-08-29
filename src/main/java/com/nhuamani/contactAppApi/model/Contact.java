@@ -28,4 +28,6 @@ public class Contact extends BaseEntity {
     private LocalDate birthdate;
     @Column(unique = true, length = 50)
     private String email;
+    private Integer votes;
+    private Double rating;
 }
